@@ -31,11 +31,14 @@ public class ValidationUtils {
 	
 	public static String getMutationSymbol(String mutationValue) {
 		char symbol = mutationValue.charAt(0);
-		if(symbol == '+' || symbol == '-') {
-			return String.valueOf(symbol);
-		} else {
-			throw new ValidationException(String.format("Mutation System '%s' is not valid. Should have either + or -.", mutationValue));
-		}
+		
+		return String.valueOf(symbol);
+		/*
+		 * if(symbol == '+' || symbol == '-') { return String.valueOf(symbol); } else {
+		 * throw new ValidationException(String.
+		 * format("Mutation System '%s' is not valid. Should have either + or -.",
+		 * mutationValue)); }
+		 */
 	}
 
 	public static Double getMutationValue(String mutationValue) {

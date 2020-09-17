@@ -36,7 +36,7 @@ public class ReportserviceTest {
 	public void shouldreadAndValidate() throws Exception {
 		List<ReportResponse> results = new ArrayList<>();
 		ReportResponse result1 = new ReportResponse(
-				new Report(112806L, "NL27SNSB0917829871", 91.23, "+", +15.57, "Clothes for Willem Dekker", 106.8));
+				new Report(130498L, "NL27SNSB0917829871", 91.23, "+", +15.57, "Clothes for Willem Dekker", 106.8));
 		ReportResponse result2 = new ReportResponse(
 				new Report(112806L, "NL69ABNA0433647324", 90.83, "-", -10.91, "Clothes for Richard de Vries", 79.92));
 		ReportResponse result3 = new ReportResponse(
