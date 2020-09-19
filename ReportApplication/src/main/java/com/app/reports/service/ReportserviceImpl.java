@@ -1,6 +1,8 @@
 package com.app.reports.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +20,7 @@ import com.app.reports.model.ReportResponse;
 
 @Service
 public class ReportserviceImpl implements Reportservice {
-
+	
 	@Override
 	public List<ReportResponse> readAndValidate(MultipartFile file) {
 		// TODO Auto-generated method stub
@@ -37,6 +39,7 @@ public class ReportserviceImpl implements Reportservice {
 				.collect(Collectors.groupingBy(report -> report.getTransactionReference()));
 
 		List<Report> validationResults = new ArrayList<>();
+		
 		groupByTransactionRef.forEach((k, v) -> {
 			if (v.size() > 1) {
 				validationResults.addAll(v);
@@ -50,10 +53,19 @@ public class ReportserviceImpl implements Reportservice {
 	//Validate Endbalance
 	
 	private List<Report> validateRecordEndBalance(List<Report> reports) {
-		return reports.stream().filter(transaction -> !isValid(transaction)).collect(Collectors.toList());
+		return reports.stream().filter(rep -> !isValid(rep)).collect(Collectors.toList());
 	}
 
-	private boolean isValid(Report reports) {
-		return (reports.getStartBalance() + reports.getMutationValue()) == (reports.getEndBalance());
+	private boolean isValid(Report rep) {
+		
+		
+		BigDecimal balancevalu =new BigDecimal(rep.getStartBalance()).add(new BigDecimal(rep.getMutationValue()));
+		BigDecimal endbalance =new BigDecimal(rep.getEndBalance());
+
+		BigDecimal expbalanceval= balancevalu.setScale(2, RoundingMode.HALF_UP);
+		BigDecimal expendbalanceval = endbalance.setScale(2, RoundingMode.HALF_UP);
+		  
+		  
+		return expbalanceval.equals(expendbalanceval);
 	}
 }
